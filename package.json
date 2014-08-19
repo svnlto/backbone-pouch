@@ -21,11 +21,13 @@
       "url": "http://jo.github.io/backbone-pouch//blob/master/LICENSE-MIT"
     }
   ],
-  "main": "backbone-pouch",
+  "main": "dist/backbone-pouch",
   "scripts": {
-    "test": "tap test/*.js",
+    "watch": "watchify src/backbone-pouch.js -o dist/backbone-pouch.js --standalone BackbonePouch --external underscore -v",
+    "build": "browserify src/backbone-pouch.js > dist/backbone-pouch.js --standalone BackbonePouch --external underscore",
+    "test": "npm install && npm run build && tap test/*.js",
     "render-docs": "bin/render-docs.js",
-    "copy-docs": "cp backbone-pouch.js doc/examples/todos/ && cp backbone-pouch.js doc/examples/todos-sync/",
+    "copy-docs": "cp dist/backbone-pouch.js doc/examples/todos/ && cp dist/backbone-pouch.js doc/examples/todos-sync/",
     "docs": "npm run render-docs && npm run copy-docs"
   },
   "dependencies": {
@@ -34,9 +36,12 @@
     "underscore": "^1.6.0"
   },
   "devDependencies": {
+    "browserify": "^5.10.0",
+    "extend": "^1.3.0",
     "highlight.js": "^8.0.0",
     "marked": "^0.3.2",
-    "tap": "^0.4.11"
+    "tap": "^0.4.11",
+    "watchify": "^1.0.2"
   },
   "keywords": [
     "backbone",

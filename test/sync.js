@@ -1,7 +1,7 @@
 var test = require('tap').test
 var Backbone = require('backbone')
 var PouchDB = require('pouchdb')
-var BackbonePouch = require('../backbone-pouch.js')
+var BackbonePouch = require('../dist/backbone-pouch.js');
 
 Backbone.sync = BackbonePouch.sync({
   db: PouchDB('_test_db')

@@ -1,7 +1,7 @@
 var test = require('tap').test
 var Backbone = require('backbone')
 var PouchDB = require('pouchdb')
-var BackbonePouch = require('../backbone-pouch.js')
+var BackbonePouch = require('../dist/backbone-pouch.js')
 
 Backbone.sync = BackbonePouch.sync({
   db: PouchDB('_test_db')
@@ -11,7 +11,7 @@ Backbone.sync = BackbonePouch.sync({
 test('empty attachments', function(t) {
   var Model = Backbone.Model.extend(BackbonePouch.attachments())
   var model = new Model()
-  
+
   t.equal(model.attachments().length, 0, 'attachments should be empty')
 
   t.end()
@@ -24,7 +24,7 @@ test('attachments with attachment', function(t) {
       myfile: {}
     }
   })
-  
+
   t.equal(model.attachments().length, 1, 'attachments should have one entry')
   t.equal(model.attachments()[0], 'myfile', 'attachments should have "myfile" entry')
 
@@ -46,7 +46,7 @@ test('attachments filtered by string', function(t) {
       }
     }
   })
-  
+
   t.equal(model.attachments().length, 3, 'attachments should have three entries')
   t.equal(model.attachments('image').length, 2, 'attachments should have two image entries')
   t.ok(model.attachments('image').indexOf('animage') > -1, 'attachments should have animage')
@@ -70,7 +70,7 @@ test('attachments filtered by regexp', function(t) {
       }
     }
   })
-  
+
   var regexp = /image\/png/
 
   t.equal(model.attachments().length, 3, 'attachments should have three entries')
@@ -95,7 +95,7 @@ test('attachments filtered by function', function(t) {
       }
     }
   })
-  
+
   function filter(name, att) {
     return name.match('image') &&
       att.content_type.match('image')
@@ -121,7 +121,7 @@ test('standalone attachment', function(t) {
       }
     }
   })
-  
+
   model.save({}, {
     success: function(model) {
       t.ok(model.id, 'should have an id')
@@ -144,7 +144,7 @@ test('standalone attachment', function(t) {
 //     idAttribute: '_id'
 //   })
 //   var model = new Model()
-//   
+//
 //   model.attach(new Buffer('Hello World!'), 'myfile', 'text/plain', function(err) {
 //     t.ok(!err, 'no error should have been occured')
 //     t.ok(model.id, 'should have an id')
@@ -162,7 +162,7 @@ test('standalone attachment', function(t) {
 //     idAttribute: '_id'
 //   })
 //   var model = new Model({ _id: 'mydoc' })
-//   
+//
 //   model.attach(new Buffer('Hello World!'), 'myfile', 'text/plain', function(err) {
 //     t.ok(!err, 'no error should have been occured')
 //     t.equal(model.id, 'mydoc', 'should have id mydoc')
